@@ -1,0 +1,128 @@
+:root{
+  --bg-1: #070617;
+  --bg-2: #071033;
+  --accent: #00ffd5;
+  --accent-2: #6c6cff;
+  --muted: rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.04);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Exo 2', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(108,108,255,0.08), transparent),
+              linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 100%);
+  color:#e8f8f5;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+/* subtle starfield */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background-image: radial-gradient(circle at 10% 20%, rgba(255,255,255,0.03) 0 1px, transparent 1px), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 0 1px, transparent 1px);
+  background-size: 100px 100px, 200px 200px;
+  pointer-events:none;
+  z-index:0;
+}
+
+.site-header{width:100%;padding:18px 28px;display:flex;justify-content:space-between;align-items:center;z-index:2}
+.logo{font-family:'Orbitron',sans-serif;letter-spacing:3px;color:var(--accent);font-weight:700;font-size:1.1rem;text-shadow:0 0 18px rgba(0,255,213,0.08)}
+.kbd-hint{color:rgba(255,255,255,0.5);font-size:0.9rem}
+.kbd-hint .key{display:inline-block;padding:4px 8px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.03);font-family:monospace;color:var(--accent-2)}
+
+.stage{width:100%;max-width:1100px;padding:36px 20px;z-index:1;display:flex;flex-direction:column;align-items:center}
+/* make the main stage take available vertical space and center its contents */
+.stage{flex:1;justify-content:center}
+
+/* entrance animation: subtle fade + scale */
+.stage{opacity:0;transform:scale(0.98) translateY(6vh);transition:opacity 600ms cubic-bezier(.2,.9,.3,1),transform 700ms cubic-bezier(.18,.9,.2,1)}
+.stage.ready{opacity:1;transform:scale(1) translateY(0)}
+.result{font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:1px;margin:6px 0 22px;color:var(--accent-2);font-size:2.4rem;text-shadow:0 0 26px rgba(108,108,255,0.12)}
+
+.cards{display:flex;align-items:center;gap:22px;width:100%;justify-content:center}
+.card{background:linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));backdrop-filter: blur(8px);-webkit-backdrop-filter: blur(8px);border-radius:16px;padding:18px 22px;text-align:center;width:280px;box-shadow:0 6px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04)}
+.label{font-size:1rem;color:rgba(255,255,255,0.55);margin-bottom:8px}
+.dice-image{width:160px;height:160px;object-fit:contain;display:block;margin:0 auto;transition:transform 600ms cubic-bezier(.18,.9,.2,1),filter 300ms}
+.card:hover .dice-image{transform:translateY(-6px) rotate(-6deg);filter:drop-shadow(0 10px 22px rgba(108,108,255,0.12))}
+
+.versus{font-family:'Orbitron',sans-serif;color:var(--accent);font-weight:700;font-size:1.4rem;opacity:0.9}
+
+.controls{margin-top:20px}
+.btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:#021024;padding:12px 28px;border-radius:999px;font-weight:700;letter-spacing:1px;cursor:pointer;box-shadow:0 8px 30px rgba(0,255,213,0.08);transition:transform 180ms,box-shadow 180ms}
+.btn:active{transform:translateY(2px)}
+.btn:hover{box-shadow:0 18px 70px rgba(108,108,255,0.12)}
+
+/* shake animation for rolling */
+.shake{animation:shake 700ms cubic-bezier(.36,.07,.19,.97)}
+@keyframes shake{20%{transform:translateX(-12px) rotate(-8deg)}40%{transform:translateX(8px) rotate(8deg)}60%{transform:translateX(-6px) rotate(-4deg)}80%{transform:translateX(4px) rotate(3deg)}100%{transform:translateX(0) rotate(0)}}
+
+.result.winner{color:var(--accent);text-shadow:0 0 30px rgba(0,255,213,0.16)}
+.result.draw{color:#ffd166;text-shadow:0 0 20px rgba(255,209,102,0.12)}
+
+/* winner pulse glow */
+.result.winner{animation:winGlow 1200ms ease-in-out 2}
+@keyframes winGlow{0%{text-shadow:0 0 6px rgba(0,255,213,0.06)}50%{text-shadow:0 0 36px rgba(0,255,213,0.18)}100%{text-shadow:0 0 6px rgba(0,255,213,0.06)}}
+
+.site-footer{margin:40px 0 20px;color:rgba(255,255,255,0.45);font-size:0.95rem}
+
+/* confetti canvas overlay */
+#confetti-canvas{position:fixed;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:999}
+
+/* mute button styles */
+.mute{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--accent);padding:8px 10px;border-radius:10px;cursor:pointer;margin-left:12px}
+.mute[aria-pressed="true"]{background:rgba(255,255,255,0.02);box-shadow:0 8px 28px rgba(0,255,213,0.05)}
+
+/* responsive */
+@media (max-width:720px){
+  .cards{flex-direction:column}
+  .card{width:100%;max-width:320px}
+  .dice-image{width:200px;height:200px}
+}
+
+/* Responsive refinements for many device sizes */
+/* Use relative, fluid sizing so layout adapts smoothly */
+.stage{padding:clamp(20px,4vw,48px) 16px}
+.result{font-size:clamp(1.6rem,3.5vw,2.4rem)}
+.logo{font-size:clamp(0.95rem,1.6vw,1.2rem)}
+.cards{flex-wrap:wrap}
+.card{width:clamp(220px,28vw,320px);padding:clamp(12px,1.7vw,22px)}
+.dice-image{width:clamp(120px,18vw,180px);height:clamp(120px,18vw,180px)}
+
+/* Small screens: stack cards and make controls touch-friendly */
+@media (max-width:560px){
+  .cards{gap:12px}
+  .versus{display:none}
+  .label{font-size:0.95rem}
+  .btn{width:100%;padding:14px 18px;font-size:1rem;border-radius:14px}
+  .site-header{padding:12px 14px}
+}
+
+/* Very small phones */
+@media (max-width:380px){
+  .dice-image{width:120px;height:120px}
+  .card{border-radius:12px}
+  .result{font-size:1.3rem}
+}
+
+/* Larger screens: keep things centered but allow more spacing */
+@media (min-width:1100px){
+  .stage{padding:48px 12px}
+  .cards{gap:36px}
+  .dice-image{width:200px;height:200px}
+}
+
+/* Accessibility: focus styles for keyboard users */
+.btn:focus{outline:3px solid rgba(0,255,213,0.14);outline-offset:4px}
+.card:focus-within{box-shadow:0 10px 40px rgba(0,0,0,0.6), 0 0 24px rgba(108,108,255,0.06)}
+
+/* Ensure interactive targets meet touch-friendly minimums */
+.btn{min-height:48px}
+

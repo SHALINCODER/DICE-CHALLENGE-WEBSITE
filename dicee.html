@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dicee — Neon Arena</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Exo+2:wght@300;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="logo">DICEE</div>
+      <nav class="kbd-hint">Press <span class="key">Space</span> to Roll</nav>
+      <button id="muteBtn" class="mute" aria-pressed="false" title="Mute / Unmute">🔊</button>
+    </header>
+
+    <main class="stage">
+      <h1 class="result">Refresh Me</h1>
+
+      <div class="cards">
+        <figure class="card">
+          <figcaption class="label">Player 1</figcaption>
+          <img class="img1 dice-image" src="./images/dice6.png" alt="Player 1 dice">
+        </figure>
+
+        <div class="versus">VS</div>
+
+        <figure class="card">
+          <figcaption class="label">Player 2</figcaption>
+          <img class="img2 dice-image" src="./images/dice6.png" alt="Player 2 dice">
+        </figure>
+      </div>
+
+      <div class="controls">
+        <button id="rollBtn" class="btn">ROLL</button>
+      </div>
+    </main>
+
+    <footer class="site-footer">www 🎲 Dice Game 🎲 com</footer>
+    <canvas id="confetti-canvas" aria-hidden="true"></canvas>
+    <script src="dice.js"></script>
+  </body>
+</html>
